@@ -1,0 +1,24 @@
+{
+  "name": "trainly-backend",
+  "version": "1.0.0",
+  "description": "Backend for trainly react app",
+  "main": "server.js",
+  "scripts": {
+    "test": "jest -i"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/readytowin2298/trainly-backend.git"
+  },
+  "author": "David Ames",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/readytowin2298/trainly-backend/issues"
+  },
+  "homepage": "https://github.com/readytowin2298/trainly-backend#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "express": "^4.17.1",
+    "pg": "^8.6.0"
+  }
+}
