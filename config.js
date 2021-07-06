@@ -5,11 +5,11 @@ require("colors");
 
 function getDatabaseUri() {
     return (process.env.NODE_ENV === "test")
-        ? "jobly_test"
-        : process.env.DATABASE_URL || "jobly";
+        ? "trainly_test"
+        : process.env.DATABASE_URL || "trainly";
 }
 
-console.log("Jobly Config:".green);
+console.log("Trainly Config:".green);
 console.log("SECRET_KEY:".yellow, SECRET_KEY);
 console.log("PORT:".yellow, PORT.toString());
 console.log("BCRYPT_WORK_FACTOR".yellow, BCRYPT_WORK_FACTOR);
