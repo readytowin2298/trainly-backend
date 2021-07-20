@@ -25,7 +25,8 @@ class User {
                     name,
                     department,
                     position,
-                    location
+                    location,
+                    isAdmin
              FROM users
              WHERE email = $1`,
           [email],
@@ -53,7 +54,7 @@ class User {
      **/
   
     static async register(
-        { email, password, name, department, position, location, trainer }) {
+        { email, password, name, department, position, location, isAdmin }) {
       const duplicateCheck = await db.query(
             `SELECT email
              FROM users
@@ -75,9 +76,9 @@ class User {
               department,
               position,
               location,
-              trainer)
+              isAdmin)
              VALUES ($1, $2, $3, $4, $5, $6, $7)
-             RETURNING email, name, department, position, location, trainer`,
+             RETURNING email, name, department, position, location, isAdmin`,
           [
             email,
             hashedPassword,
@@ -85,7 +86,7 @@ class User {
             department,
             position,
             location,
-            trainer
+            isAdmin
           ],
       );
   

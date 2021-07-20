@@ -11,7 +11,7 @@ CREATE TABLE users (
     department TEXT REFERENCES departments ON DELETE CASCADE,
     position TEXT,
     location TEXT,
-    trainer BOOLEAN DEFAULT FALSE
+    isAdmin BOOLEAN DEFAULT FALSE
 );
 
 

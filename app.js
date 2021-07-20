@@ -5,9 +5,14 @@ const app = express()
 
 const { NotFoundError } = require("./expressError");
 const { authenticateJWT } = require("./middleware/auth");
+const authRoutes = require('./routes/auth');
+const userRoutes = require('./routes/users');
 
 app.use(authenticateJWT);
 app.use(express.json());
+
+app.use("/auth", authRoutes);
+app.use("/users", userRoutes)
 
 
 app.get('/', function(req, res, next){

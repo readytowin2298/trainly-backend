@@ -4,7 +4,7 @@ VALUES ('T1', 'Technical Support Tier 1'), ('STS', 'Senior Technical Support'),
 
 -- '$2b$16$cmYcUmGUoP.rZziNMelNJOPalA2YAhn.XRaEzQiP26dUgdXQS9o2G'
 
-INSERT INTO users ( email, password, name, department, position, location, trainer )
+INSERT INTO users ( email, password, name, department, position, location, isAdmin )
 VALUES ('dames@team.nxlink.com', '$2b$16$cmYcUmGUoP.rZziNMelNJOPalA2YAhn.XRaEzQiP26dUgdXQS9o2G',
     'David Ames', 'ERT', 'Escalation Response Specialist', 'WFH', TRUE),
     ('splugge@team.nxlink.com', '$2b$16$cmYcUmGUoP.rZziNMelNJOPalA2YAhn.XRaEzQiP26dUgdXQS9o2G', 
