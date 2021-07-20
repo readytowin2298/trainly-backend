@@ -1,6 +1,6 @@
 CREATE TABLE departments (
     department_code TEXT PRIMARY KEY,
-    full_name TEXT
+    description TEXT
 );
 
 

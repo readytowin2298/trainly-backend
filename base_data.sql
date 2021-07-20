@@ -1,4 +1,4 @@
-INSERT INTO departments ( department_code, full_name )
+INSERT INTO departments ( department_code, description )
 VALUES ('T1', 'Technical Support Tier 1'), ('STS', 'Senior Technical Support'),
     ('TCS', 'Technical Chat Support'), ('ERT', 'Escalation Response Team');
 

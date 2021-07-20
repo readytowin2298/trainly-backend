@@ -5,6 +5,8 @@ const {
     BadRequestError,
     UnauthorizedError,
 } = require("../expressError");
+
+const {sqlForPartialUpdate} = require('../helpers/sql');
   
 const { BCRYPT_WORK_FACTOR } = require("../config.js");
 
@@ -63,7 +65,7 @@ class User {
       );
   
       if (duplicateCheck.rows[0]) {
-        throw new BadRequestError(`Duplicate username: ${username}`);
+        throw new BadRequestError(`Duplicate email: ${email}`);
       }
   
       const hashedPassword = await bcrypt.hash(password, BCRYPT_WORK_FACTOR);
@@ -102,11 +104,10 @@ class User {
   
     static async findAll() {
       const result = await db.query(
-            `SELECT *
+            `SELECT email, name, department, position, location, isadmin
              FROM users
              ORDER BY name`,
       );
-  
       return result.rows;
     }
   
@@ -120,7 +121,7 @@ class User {
   
     static async get(email) {
       const userRes = await db.query(
-            `SELECT *
+            `SELECT email, name, department, position, location, isadmin
              FROM users
              WHERE email = $1`,
           [email],
@@ -128,7 +129,7 @@ class User {
   
       const user = userRes.rows[0];
   
-      if (!user) throw new NotFoundError(`No user: ${username}`);
+      if (!user) throw new NotFoundError(`No user: ${email}`);
   
     //   const userApplicationsRes = await db.query(
     //         `SELECT a.job_id
@@ -155,6 +156,34 @@ class User {
      * Callers of this function must be certain they have validated inputs to this
      * or a serious security risks are opened.
      */
+
+
+    static async update({email, password, name, department, location, position, isAdmin}){
+        if(password){ password = await bcrypt.hash(password, BCRYPT_WORK_FACTOR) }
+        if(!email){throw new BadRequestError("Email must be included")}
+        const { setCols, values } = sqlForPartialUpdate(
+          {email, password, name, department, location, position, isAdmin},
+          { isAdmin : "isadmin" }
+        )
+        const usernameVarIdx = "$" + (values.length + 1);
+
+        const querySql = `UPDATE users 
+                      SET ${setCols} 
+                      WHERE email = ${usernameVarIdx} 
+                      RETURNING email,
+                                name,
+                                department,
+                                position,
+                                location,
+                                isadmin AS "isAdmin"`;
+        const result = await db.query(querySql, [...values, email]);
+        const user = result.rows[0];
+
+        if (!user) throw new NotFoundError(`No user: ${email}`);
+
+        delete user.password;
+        return user;
+    }
   
   
     /** Delete given user from database; returns undefined. */
@@ -169,7 +198,7 @@ class User {
       );
       const user = result.rows[0];
   
-      if (!user) throw new NotFoundError(`No user: ${username}`);
+      if (!user) throw new NotFoundError(`No user: ${email}`);
     }
 }
   
