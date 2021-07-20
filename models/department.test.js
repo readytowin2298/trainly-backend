@@ -53,4 +53,10 @@ describe("update", ()=> {
         const check = await Department.get("t1");
         expect(check.description).toBe("Old Test Department");
     })
+});
+describe("delete", ()=>{
+    test("works", async ()=> {
+        const description = await Department.delete("t1");
+        expect(description)
+    })
 })

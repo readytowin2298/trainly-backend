@@ -41,6 +41,14 @@ class Department {
             throw new UnauthorizedError("Error syncing with database");
         }
     }
+    static async delete(department_code){
+        try {
+            let description = await db.query(`DELETE FROM departments WHERE department_code = $1 RETURNING description`, [department_code]);
+            return description;
+        } catch(e) {
+            throw new BadRequestError("Error Communicating with database")
+        }
+    }
 }
 
 
