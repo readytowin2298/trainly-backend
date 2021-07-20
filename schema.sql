@@ -1,5 +1,5 @@
 CREATE TABLE departments (
-    department_code TEXT PRIMARY KEY,
+    department_code TEXT PRIMARY KEY UNIQUE,
     description TEXT
 );
 
