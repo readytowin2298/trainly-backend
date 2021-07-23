@@ -13,7 +13,7 @@
             "department": "HR",
             "position": "Secretary",
             "location": "HQ",
-            "trainer": "false"
+            "isAdmin": "false"
         }
     ],
     "required": [
@@ -23,7 +23,7 @@
         "department",
         "position",
         "location",
-        "trainer"
+        "isAdmin"
     ],
     "properties": {
         "email": {
@@ -87,8 +87,8 @@
             ]
         },
         "isAdmin": {
-            "$id": "#/properties/trainer",
-            "type": "string",
+            "$id": "#/properties/isAdmin",
+            "type": "boolean",
             "title": "The trainer schema",
             "description": "An explanation about the purpose of this instance.",
             "default": "",

@@ -160,7 +160,7 @@ class User {
 
     static async update({email, password, name, department, location, position, isAdmin}){
         if(password){ password = await bcrypt.hash(password, BCRYPT_WORK_FACTOR) }
-        if(!email){throw new BadRequestError("Email must be included")}
+
         const { setCols, values } = sqlForPartialUpdate(
           {email, password, name, department, location, position, isAdmin},
           { isAdmin : "isadmin" }
@@ -180,8 +180,6 @@ class User {
         const user = result.rows[0];
 
         if (!user) throw new NotFoundError(`No user: ${email}`);
-
-        delete user.password;
         return user;
     }
   

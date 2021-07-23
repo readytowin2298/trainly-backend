@@ -9,7 +9,7 @@ function createToken(user) {
 
   let payload = {
     email: user.email,
-    isAdmin: user.isAdmin || false,
+    isAdmin: user.isadmin,
   };
 
   return jwt.sign(payload, SECRET_KEY);

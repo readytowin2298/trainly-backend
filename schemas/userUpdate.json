@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://example.com/example.json",
+  "type": "object",
+  "properties": {
+    "password": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "department": {
+      "type": "string"
+    },
+    "position": {
+      "type": "string"
+    },
+    "location": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "required": []
+}

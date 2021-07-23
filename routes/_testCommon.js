@@ -38,9 +38,9 @@ async function commonAfterAll() {
   await db.end();
 }
 
-
-const test1Token = createToken({ username: "test1", isAdmin: true });
-const test2 = createToken({ username: "test2", isAdmin: false });
+// isAdmin is all lowercase to mimic database response
+const test1Token = createToken({ email: "test1", isadmin: true });
+const test2Token = createToken({ email: "test2", isadmin: false });
 
 
 module.exports = {
@@ -49,5 +49,5 @@ module.exports = {
   commonAfterEach,
   commonAfterAll,
   test1Token,
-  test2,
+  test2Token,
 };
