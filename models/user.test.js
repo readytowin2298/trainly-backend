@@ -110,7 +110,7 @@ const {
           position: "clerk",
           department: "t1",
           location: "hq",
-          isadmin: true,
+          isAdmin: true,
         }
       );
     });
@@ -127,7 +127,7 @@ const {
           position: "clerk",
           department: "t1",
           location: "hq",
-          isadmin: true,
+          isAdmin: true,
       });
     });
   

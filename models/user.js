@@ -20,7 +20,7 @@ class User {
      **/
 
     static sqlToJs(obj){
-       if(obj['isadmin']){
+       if(obj.hasOwnProperty('isadmin')){
          obj['isAdmin'] = obj['isadmin'];
           delete obj['isadmin']
         }
@@ -187,7 +187,7 @@ class User {
                                 department,
                                 position,
                                 location,
-                                isadmin AS 'isAdmin'`;
+                                isadmin`;
         const result = await db.query(querySql, [...values, email]);
         const user = result.rows[0];
 

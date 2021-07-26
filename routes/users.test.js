@@ -35,7 +35,6 @@ describe("POST /users", function () {
         })
         .set("authorization", `Bearer ${test1Token}`);
     expect(resp.statusCode).toEqual(201);
-    console.log(resp.body)
     expect(resp.body).toEqual({
       "user": {
         "email": "u-new",
@@ -43,7 +42,7 @@ describe("POST /users", function () {
         "department": "td1",
         "position": "tester",
         "location": "hq",
-        "isadmin": false
+        "isAdmin": false
       },
       "token": expect.any(String)
     });
@@ -70,7 +69,7 @@ describe("POST /users", function () {
         "department": "td1",
         "position": "tester",
         "location": "hq",
-        "isadmin": true,
+        "isAdmin": true,
       }, token: expect.any(String),
     });
   });
@@ -155,7 +154,7 @@ describe("GET /users/:username", function () {
         "department": "td2",
         "position": "janitor",
         "location": "hq",
-        "isadmin": false
+        "isAdmin": false
       }
     });
   });
@@ -171,7 +170,7 @@ describe("GET /users/:username", function () {
         "department": "td2",
         "position": "janitor",
         "location": "hq",
-        "isadmin": false
+        "isAdmin": false
       }
     });
   });
@@ -221,17 +220,17 @@ describe("PATCH /users/:username", () => {
 
   test("works for same user", async function () {
     const resp = await request(app)
-        .patch(`/users/u1`)
+        .patch(`/users/test2`)
         .send({
-          email: "New",
+          position: "trainer",
         })
         .set("authorization", `Bearer ${test2Token}`);
     expect(resp.body).toEqual({
       "user": {
-        "email": "New",
+        "email": "test2",
         "name": "tester2",
         "department": "td2",
-        "position": "janitor",
+        "position": "trainer",
         "location": "hq",
         "isAdmin": false
       }
