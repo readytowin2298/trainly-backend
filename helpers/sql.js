@@ -17,32 +17,46 @@ const { BadRequestError } = require("../expressError");
  *     values: ['Aliya', 32] }
  */
 
-// function sqlForPartialUpdate(dataToUpdate, jsToSql) {
-//   const keys = Object.keys(dataToUpdate);
-//   if (keys.length === 0) throw new BadRequestError("No data");
+function sqlForPartialUpdate(dataToUpdate, jsToSql) {
+  let keys = Object.keys(dataToUpdate);
 
-//   // {firstName: 'Aliya', age: 32} => ['"first_name"=$1', '"age"=$2']
-//   const cols = keys.map((colName, idx) =>
-//       `"${jsToSql[colName] || colName}"=$${idx + 1}`,
-//   );
+  for( let key of keys){
+    if( dataToUpdate[key] === undefined ){
+      delete dataToUpdate[key]
+    }
+  };
 
+  keys = Object.keys(dataToUpdate);
+
+  if (keys.length === 0) throw new BadRequestError("No data");
+
+  // {firstName: 'Aliya', age: 32} => ['"first_name"=$1', '"age"=$2']
+  const cols = keys.map((colName, idx) =>
+      `"${jsToSql[colName] || colName}"=$${idx + 1}`,
+  );
+
+  return {
+    setCols: cols.join(", "),
+    values: Object.values(dataToUpdate),
+  };
+}
+
+// function sqlForPartialUpdate(data, jsToSql){
+//   let keys = Object.keys(data);
+//   if (keys.length === 0) {throw new BadRequestError("No data");}
+//   let newStr = "";
+//   let values = [];
+//   let i=0;
+//   for(let col of keys){
+//     if(!data.col === undefined){
+//       newStr += `"${jsToSql[col] || col}"=$${i + 1}`;
+//       i++
+//       values += data.col
+//     }
+//   }
 //   return {
-//     setCols: cols.join(", "),
-//     values: Object.values(dataToUpdate),
+//     setCols: true
 //   };
 // }
-
-function sqlForPartialUpdate(data, jsToSql){
-  if (Object.keys(data).length === 0) throw new BadRequestError("No data");
-  let newStr = "";
-  let i=0;
-  for(let col of Object.keys(data)){
-    if(!data.col === undefined){
-      newStr += `"${jsToSql[col] || col}"=$${i + 1}`;
-      i++
-    }
-  }
-  return newStr;
-}
 
 module.exports = { sqlForPartialUpdate };
