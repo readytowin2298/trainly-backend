@@ -35,6 +35,7 @@ describe("POST /users", function () {
         })
         .set("authorization", `Bearer ${test1Token}`);
     expect(resp.statusCode).toEqual(201);
+    console.log(resp.body)
     expect(resp.body).toEqual({
       "user": {
         "email": "u-new",
@@ -43,7 +44,8 @@ describe("POST /users", function () {
         "position": "tester",
         "location": "hq",
         "isadmin": false
-      }, token: expect.any(String),
+      },
+      "token": expect.any(String)
     });
   });
 
@@ -206,33 +208,35 @@ describe("PATCH /users/:username", () => {
         })
         .set("authorization", `Bearer ${test1Token}`);
     expect(resp.body).toEqual({
-      user: {
-        username: "u1",
-        firstName: "New",
-        lastName: "U1L",
-        email: "user1@user.com",
-        isAdmin: false,
-      },
+      "user": {
+        "email": "test2",
+        "name": "New",
+        "department": "td2",
+        "position": "janitor",
+        "location": "hq",
+        "isAdmin": false
+      }
     });
   });
 
-  // test("works for same user", async function () {
-  //   const resp = await request(app)
-  //       .patch(`/users/u1`)
-  //       .send({
-  //         firstName: "New",
-  //       })
-  //       .set("authorization", `Bearer ${u1Token}`);
-  //   expect(resp.body).toEqual({
-  //     user: {
-  //       username: "u1",
-  //       firstName: "New",
-  //       lastName: "U1L",
-  //       email: "user1@user.com",
-  //       isAdmin: false,
-  //     },
-  //   });
-  // });
+  test("works for same user", async function () {
+    const resp = await request(app)
+        .patch(`/users/u1`)
+        .send({
+          email: "New",
+        })
+        .set("authorization", `Bearer ${test2Token}`);
+    expect(resp.body).toEqual({
+      "user": {
+        "email": "New",
+        "name": "tester2",
+        "department": "td2",
+        "position": "janitor",
+        "location": "hq",
+        "isAdmin": false
+      }
+    });
+  });
 
   // test("unauth if not same user", async function () {
   //   const resp = await request(app)

@@ -18,6 +18,13 @@ class User {
      *
      * Throws UnauthorizedError is user not found or wrong password.
      **/
+
+    static sqlToJs(obj){
+       if(obj['isadmin']){
+         obj['isAdmin'] = obj['isadmin'];
+          delete obj['isadmin']
+        }
+      }
   
     static async authenticate(email, password) {
       // try to find the user first
@@ -28,7 +35,7 @@ class User {
                     department,
                     position,
                     location,
-                    isAdmin
+                    isadmin
              FROM users
              WHERE email = $1`,
           [email],
@@ -37,6 +44,7 @@ class User {
       const user = result.rows[0];
   
       if (user) {
+        this.sqlToJs(user);
         // compare hashed password to a new hash from password
         const isValid = await bcrypt.compare(password, user.password);
         if (isValid === true) {
@@ -78,9 +86,9 @@ class User {
               department,
               position,
               location,
-              isAdmin)
+              isadmin)
              VALUES ($1, $2, $3, $4, $5, $6, $7)
-             RETURNING email, name, department, position, location, isAdmin`,
+             RETURNING email, name, department, position, location, isadmin`,
           [
             email,
             hashedPassword,
@@ -93,7 +101,8 @@ class User {
       );
   
       const user = result.rows[0];
-  
+      this.sqlToJs(user);
+
       return user;
     }
   
@@ -108,6 +117,9 @@ class User {
              FROM users
              ORDER BY name`,
       );
+      for(let row of result.rows){
+        this.sqlToJs(row);
+      }
       return result.rows;
     }
   
@@ -130,7 +142,7 @@ class User {
       const user = userRes.rows[0];
   
       if (!user) throw new NotFoundError(`No user: ${email}`);
-  
+      this.sqlToJs(user);
     //   const userApplicationsRes = await db.query(
     //         `SELECT a.job_id
     //          FROM applications AS a
@@ -175,11 +187,12 @@ class User {
                                 department,
                                 position,
                                 location,
-                                isadmin AS "isAdmin"`;
+                                isadmin AS 'isAdmin'`;
         const result = await db.query(querySql, [...values, email]);
         const user = result.rows[0];
 
         if (!user) throw new NotFoundError(`No user: ${email}`);
+        this.sqlToJs(user);
         return user;
     }
   

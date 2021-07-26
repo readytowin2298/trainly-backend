@@ -39,8 +39,8 @@ async function commonAfterAll() {
 }
 
 // isAdmin is all lowercase to mimic database response
-const test1Token = createToken({ email: "test1", isadmin: true });
-const test2Token = createToken({ email: "test2", isadmin: false });
+const test1Token = createToken({ email: "test1", isAdmin: true });
+const test2Token = createToken({ email: "test2", isAdmin: false });
 
 
 module.exports = {
