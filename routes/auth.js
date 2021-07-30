@@ -22,7 +22,7 @@ router.post("/token", async function (req, res, next) {
       const errs = validator.errors.map(e => e.stack);
       throw new BadRequestError(errs);
     }
-
+    console.log(req.body)
     const { email, password } = req.body;
     const user = await User.authenticate(email, password);
     const token = createToken(user);
