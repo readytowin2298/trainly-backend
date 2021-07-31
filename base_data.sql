@@ -17,7 +17,7 @@ VALUES ('dames@team.nxlink.com', '$2b$16$cmYcUmGUoP.rZziNMelNJOPalA2YAhn.XRaEzQi
 INSERT INTO quizzes ( name, description, instructions )
 VALUES ('Test Quiz', 'A test of the quiz system', 'Click True and submit');
 
-INSERT INTO assignments ( task, user_email, completed, score )
+INSERT INTO assignments ( quiz_id, user_email, completed, score )
 VALUES (1, 'dames@team.nxlink.com', FALSE, 0),
 (1, 'splugge@team.nxlink.com', TRUE, 100);
 

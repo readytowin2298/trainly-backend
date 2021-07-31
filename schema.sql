@@ -25,7 +25,7 @@ CREATE TABLE quizzes (
 
 CREATE TABLE assignments (
     id SERIAL PRIMARY KEY,
-    task INTEGER REFERENCES quizzes ON DELETE CASCADE,
+    quiz_id INTEGER REFERENCES quizzes ON DELETE CASCADE,
     user_email TEXT REFERENCES users ON DELETE CASCADE,
     completed BOOLEAN DEFAULT FALSE,
     score decimal(4, 1)
