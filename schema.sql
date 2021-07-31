@@ -34,7 +34,7 @@ CREATE TABLE assignments (
     
 CREATE TABLE quiz_questions (
     id SERIAL PRIMARY KEY,
-    quiz_id INTEGER REFERENCES quizzes ON DELETE CASCADE,
+    quiz_id INTEGER REFERENCES quizzes ON DELETE CASCADE,  
     question_number INTEGER,
     link_to_content TEXT,
     question_text TEXT

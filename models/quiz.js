@@ -31,6 +31,23 @@ class Quiz {
             assignment.num_questions = num_questions;
         }
         return assignments;
+    };
+
+    static async createQuiz({ name, description, instructions }){
+        if(!name || !description ){
+            throw new BadRequestError("Must include name and description")
+        }
+        let resp;
+        try {
+            resp = await db.query(`INSERT INTO quizzes (name, description, instructions)
+                VALUES ($1, $2, $3)
+                RETURNING id, name, description, instructions`, 
+                [name, description, instructions ? instructions : ""]);
+            
+        } catch(err){
+            throw new BadRequestError("Error communicating with database.")
+        };
+        return resp.rows[0]
     }
 }
 
