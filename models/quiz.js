@@ -7,6 +7,9 @@ const {
 } = require("../expressError");
   
 const { BCRYPT_WORK_FACTOR } = require("../config.js");
+const Question = require('./question');
+const Answer = require('./answer');
+
 
 class Quiz {
 
@@ -14,10 +17,15 @@ class Quiz {
         return obj;
     }
     // Get quizzes assigned to user
-    static async getQuiz(id){
+    static async getQuiz(quizId){
         try {
-            const resp = await db.query(`SELECT * FROM quizzes WHERE id = $1`, [id]);
-            return this.sqlToJs(resp.rows[0])
+            const resp = await db.query(`SELECT * FROM quizzes WHERE id = $1`, [quizId]);
+            const quiz = this.sqlToJs(resp.rows[0])
+            quiz.questions = await Question.getQuestions(quizId);
+            for(let question of quiz.questions){
+                question.answers = await Answer.getAnswers(question.id);
+            };
+            return quiz;
         } catch(err){
             throw new BadRequestError("Error communicating with database")
         }

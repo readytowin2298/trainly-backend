@@ -7,6 +7,7 @@ const { NotFoundError } = require("./expressError");
 const { authenticateJWT } = require("./middleware/auth");
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/users');
+const assignmentRoutes = require('./routes/assignments');
 const cors = require("cors");
 const morgan = require("morgan");
 
@@ -21,8 +22,8 @@ app.use(authenticateJWT);
 
 
 app.use("/auth", authRoutes);
-app.use("/users", userRoutes)
-
+app.use("/users", userRoutes);
+app.use("/assignments", assignmentRoutes);
 
 app.get('/', function(req, res, next){
     res.send({message : 'Running Successfully'})
