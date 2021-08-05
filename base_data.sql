@@ -15,15 +15,19 @@ VALUES ('dames@team.nxlink.com', '$2b$16$cmYcUmGUoP.rZziNMelNJOPalA2YAhn.XRaEzQi
     'Keenan Carpenter', 'T1', 'Technical Support Agent', 'FTW', FALSE);
 
 INSERT INTO quizzes ( name, description, instructions )
-VALUES ('Test Quiz', 'A test of the quiz system', 'Click True and submit');
+VALUES ('Test Quiz', 'A test of the quiz system', 'Click True and submit'),
+('Second Test Quiz', 'Testing API', 'Click True Twice and submit');
 
 INSERT INTO assignments ( quiz_id, user_email, completed, score )
-VALUES (1, 'dames@team.nxlink.com', FALSE, 0),
+VALUES (1, 'dames@team.nxlink.com', TRUE, 100),
+(1, 'dames@team.nxlink.com', FALSE, 0),
 (1, 'splugge@team.nxlink.com', TRUE, 100);
 
 INSERT INTO quiz_questions ( quiz_id, question_number, link_to_content,
     question_text )
-VALUES (1, 1, NULL, 'Select True');
+VALUES (1, 1, NULL, 'Select True'),
+(1, 2, NULL, 'SELECT TRUE'),
+(2, 2, NULL, 'SELECT TRUE AGAIN');
 
 INSERT INTO quiz_answers ( question_id, answer_text, correct )
 VALUES (1, 'True', TRUE);

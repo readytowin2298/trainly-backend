@@ -26,12 +26,29 @@ class Assignment{
     };
     static async getAssignments(userEmail){
         try {
-            const resp = await db.query(`SELECT * FROM assignments WHERE user_email = $1`, [userEmail]);
+            const resp = await db.query(`SELECT * FROM assignments
+                JOIN quizzes 
+                ON assignments.quiz_id = quizzes.id
+                WHERE assignments.user_email = $1`,
+                [userEmail]);
             return resp.rows.map((a) => this.sqlToJs(a));
         } catch (err) {
             throw new BadRequestError("Error communicating with database.")
         }
-    }
+    };
+    static async getAssignment(assignment_id){
+        try {
+            const resp = await db.query(`SELECT * 
+                FROM assignments 
+                JOIN quizzes 
+                ON assignments.quiz_id = quizzes.id 
+                WHERE assignments.id = $1`,
+                [assignment_id]);
+            return resp.rows[0] ? this.sqlToJs(resp.rows[0]) : {"error" : "Not Found"};
+        } catch (err) {
+            throw new BadRequestError("Error communicating with database.")
+        }
+    };
 
 };
 
