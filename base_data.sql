@@ -20,7 +20,7 @@ VALUES ('Test Quiz', 'A test of the quiz system', 'Click True and submit'),
 
 INSERT INTO assignments ( quiz_id, user_email, completed, score )
 VALUES (1, 'dames@team.nxlink.com', TRUE, 100),
-(1, 'dames@team.nxlink.com', FALSE, 0),
+(2, 'dames@team.nxlink.com', FALSE, 0),
 (1, 'splugge@team.nxlink.com', TRUE, 100);
 
 INSERT INTO quiz_questions ( quiz_id, question_number, link_to_content,
