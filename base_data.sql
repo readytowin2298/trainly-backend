@@ -26,8 +26,10 @@ VALUES (1, 'dames@team.nxlink.com', TRUE, 100),
 INSERT INTO quiz_questions ( quiz_id, question_number, link_to_content,
     question_text )
 VALUES (1, 1, NULL, 'Select True'),
-(1, 2, NULL, 'SELECT TRUE'),
+(2, 2, NULL, 'SELECT TRUE'),
 (2, 2, NULL, 'SELECT TRUE AGAIN');
 
 INSERT INTO quiz_answers ( question_id, answer_text, correct )
-VALUES (1, 'True', TRUE);
+VALUES (1, 'True', TRUE), (1, 'False', FALSE), 
+(2, 'True', TRUE), (2, 'False', FALSE), 
+(3, 'True', TRUE), (3, 'False', FALSE);

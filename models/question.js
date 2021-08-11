@@ -55,7 +55,7 @@ class Question{
     };
     static async getQuestions(quizId){
         try {
-            const resp = await db.query(`SELECT * FROM quiz_questions WHERE id = $1`, [quizId]);
+            const resp = await db.query(`SELECT * FROM quiz_questions WHERE quiz_id = $1`, [quizId]);
             return resp.rows.map((e) => this.sqlToJs(e));
         } catch(err){
             throw new BadRequestError("Error communicating with database")
