@@ -50,6 +50,16 @@ class Assignment{
         }
     };
 
+    static async checkAssigned(quizId, email){
+        let assignments = await this.getAssignments(email);
+            for(let assignment of assignments){
+                if(assignment.quizId === quizId){
+                    return true;
+                }
+            }
+        return false;
+    }
+
 };
 
 module.exports = Assignment;

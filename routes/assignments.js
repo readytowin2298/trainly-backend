@@ -23,8 +23,6 @@ router.get('/', ensureLoggedIn, async function (req, res, next){
 router.get('/:assignment_id', ensureLoggedIn, async function (req, res, next){
     try {
         const assignment = await Assignment.getAssignment(req.params.assignment_id);
-        console.log("***********************************")
-        console.log(res.locals.user.isAdmin)
         if(assignment.userEmail !== res.locals.user.email && !res.locals.user.isAdmin){
             throw new UnauthorizedError("You are unauthroized to access this data")
         };

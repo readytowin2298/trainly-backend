@@ -9,6 +9,7 @@ const {
 const { BCRYPT_WORK_FACTOR } = require("../config.js");
 const Question = require('./question');
 const Answer = require('./answer');
+const Assignment = require('./assignment');
 
 
 class Quiz {
@@ -44,6 +45,34 @@ class Quiz {
             throw new BadRequestError("Error communicating with database.")
         };
     };
+
+    static async gradeQuiz({id, questions}, email){
+        const quizId = req.params.quizId
+        const assigned = await Assignment.checkAssigned(quizId, res.locals.user.email);
+        if(!assigned || res.locals.user.isAdmin){
+            throw new BadRequestError("You haven't been assigned this task")
+        };
+        let numCorrect = 0
+        for(let question of questions){
+            for(let answer of question.answers){
+                if(answer.selected === true && answer.correct === true){
+                    numCorrect += 1;
+                }
+            }
+        }
+        let score = Math.floor(numCorrect/questions.length);
+        try{
+            await db.query(`
+            UPDATE assignments
+            SET score = $1
+            WHERE user_email = $2
+            `, [score, email])
+        } catch(err) {
+            throw new BadRequestError("Error Communicating with Database")
+        }
+
+        return score;
+    }
 }
 
 
