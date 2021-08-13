@@ -46,12 +46,10 @@ class Quiz {
         };
     };
 
-    static async gradeQuiz({id, questions}, email){
-        const quizId = req.params.quizId
-        const assigned = await Assignment.checkAssigned(quizId, res.locals.user.email);
-        if(!assigned || res.locals.user.isAdmin){
-            throw new BadRequestError("You haven't been assigned this task")
-        };
+    static async gradeQuiz(quiz, email){
+        const quizId = quiz.id;
+        const questions = quiz.questions;
+        
         let numCorrect = 0
         for(let question of questions){
             for(let answer of question.answers){
@@ -60,18 +58,19 @@ class Quiz {
                 }
             }
         }
-        let score = Math.floor(numCorrect/questions.length);
+        let score = Math.floor(numCorrect/questions.length*100);
         try{
             await db.query(`
             UPDATE assignments
-            SET score = $1
+            SET score = $1,
+            completed = true
             WHERE user_email = $2
             `, [score, email])
         } catch(err) {
             throw new BadRequestError("Error Communicating with Database")
         }
-
-        return score;
+        quiz.score = score
+        return quiz;
     }
 }
 
