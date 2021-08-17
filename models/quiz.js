@@ -60,12 +60,15 @@ class Quiz {
         }
         let score = Math.floor(numCorrect/questions.length*100);
         try{
+            let assignments = await Assignment.getAssignments(email);
+            let quizArr = assignments.filter(a => a.quizId === quizId);
+            let assignment = quizArr[0];
             await db.query(`
             UPDATE assignments
             SET score = $1,
             completed = true
-            WHERE user_email = $2
-            `, [score, email])
+            WHERE id = $2
+            `, [score, assigmnent.id])
         } catch(err) {
             throw new BadRequestError("Error Communicating with Database")
         }

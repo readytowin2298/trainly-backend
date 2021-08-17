@@ -24,11 +24,10 @@ router.get('/:quizId', ensureLoggedIn, async function(req, res, next){
     }
 });
 
-router.get(`/grade/:quizId`, ensureLoggedIn, async function(req, res, next){
+router.post(`/grade`, ensureLoggedIn, async function(req, res, next){
     try{
-        const quizId = req.params.quizId;
         const quiz = req.body;
-        const assigned = await Assignment.checkAssigned(quizId, res.locals.user.email);
+        const assigned = await Assignment.checkAssigned(quiz.id, res.locals.user.email);
         if(!assigned && !res.locals.user.isAdmin){
             throw new BadRequestError("You haven't been assigned this task")
         }
@@ -38,4 +37,5 @@ router.get(`/grade/:quizId`, ensureLoggedIn, async function(req, res, next){
         return next(err)
     }
 })
+
 module.exports =  router;
