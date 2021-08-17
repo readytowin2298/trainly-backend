@@ -7,7 +7,7 @@ const {
 } = require("../expressError");
   
 const { BCRYPT_WORK_FACTOR } = require("../config.js");
-const Quiz = require('./quiz');
+// const Quiz = require('./quiz');
 const Answer = require('./answer');
 const Question = require('./question')
 

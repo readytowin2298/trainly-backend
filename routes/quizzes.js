@@ -27,6 +27,7 @@ router.get('/:quizId', ensureLoggedIn, async function(req, res, next){
 router.post(`/grade`, ensureLoggedIn, async function(req, res, next){
     try{
         const quiz = req.body;
+        console.log(quiz)
         const assigned = await Assignment.checkAssigned(quiz.id, res.locals.user.email);
         if(!assigned && !res.locals.user.isAdmin){
             throw new BadRequestError("You haven't been assigned this task")

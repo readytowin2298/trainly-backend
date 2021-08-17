@@ -68,7 +68,7 @@ class Quiz {
             SET score = $1,
             completed = true
             WHERE id = $2
-            `, [score, assigmnent.id])
+            `, [score, assignment.id])
         } catch(err) {
             throw new BadRequestError("Error Communicating with Database")
         }
