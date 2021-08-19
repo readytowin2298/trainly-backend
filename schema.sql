@@ -19,7 +19,8 @@ CREATE TABLE quizzes (
     id SERIAL PRIMARY KEY,
     name TEXT,
     description TEXT,
-    instructions TEXT
+    instructions TEXT,
+    created_by TEXT REFERENCES users ON DELETE SET NULL
 );
 
 
